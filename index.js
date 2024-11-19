@@ -27,16 +27,34 @@ program
         },
       ])
       .then((answers) => {
-        fs.writeFile(
-          "./projects.json",
-          JSON.stringify(answers),
-          "utf-8",
-          () => {
-            console.log("====================================");
-            console.log("added successfully");
-            console.log("====================================");
-          }
-        );
+        if (fs.existsSync("./projects.json")) {
+          let list = fs.readFile("./projects.json", "utf-8", (err, data) => {
+            if (err) {
+              console.log(err);
+              process.exit();
+            } else {
+              let list = JSON.parse(data);
+              list.push(answers);
+              fs.writeFile(
+                "./projects.json",
+                JSON.stringify(list),
+                "utf-8",
+                () => {
+                  console.log("added successfully");
+                }
+              );
+            }
+          });
+        } else {
+          fs.writeFile(
+            "./projects.json",
+            JSON.stringify([answers]),
+            "utf-8",
+            () => {
+              console.log("added successfully");
+            }
+          );
+        }
       });
   });
 
