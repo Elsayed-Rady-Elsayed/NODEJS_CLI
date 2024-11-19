@@ -63,8 +63,15 @@ program
   .alias("l")
   .description("list all projects")
   .action(() => {
-    console.log("====================================");
-    console.log("all projects");
-    console.log("====================================");
+    if (fs.existsSync("./projects.json")) {
+      fs.readFile("./projects.json", "utf-8", (err, content) => {
+        if (err) {
+          console.log(err);
+          process.exit();
+        } else {
+          console.table(JSON.parse(content));
+        }
+      });
+    }
   });
 program.parse(process.argv);
