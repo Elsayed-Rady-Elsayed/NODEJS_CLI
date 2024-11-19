@@ -1,5 +1,8 @@
-const { Command } = require("commander");
+import { Command } from "commander";
+import inquirer from "inquirer";
+import fs from "fs";
 const program = new Command();
+
 program
   .name("sayed-cli-helper")
   .description("cli to make your coding easier")
@@ -9,12 +12,34 @@ program
   .command("add")
   .alias("a")
   .description("add a project")
-  .argument("<title>", "add project title")
-  .option("--price <price>", "add project price")
-  .action((param, opt) => {
-    console.log(param);
-    console.log(opt);
+  .action(() => {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "project",
+          message: "name of project",
+        },
+        {
+          type: "number",
+          name: "fee",
+          message: "project fee",
+        },
+      ])
+      .then((answers) => {
+        fs.writeFile(
+          "./projects.json",
+          JSON.stringify(answers),
+          "utf-8",
+          () => {
+            console.log("====================================");
+            console.log("added successfully");
+            console.log("====================================");
+          }
+        );
+      });
   });
+
 program
   .command("list")
   .alias("l")
