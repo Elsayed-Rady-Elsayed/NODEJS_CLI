@@ -1,16 +1,20 @@
 {
-  "name": "cli-manage",
+  "name": "cli-manage-sayed-rady",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "cli-manage": "index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cli-manage-sayed-rady": "^1.0.0",
     "commander": "^12.1.0",
     "inquirer": "^12.1.0",
     "nodemon": "^3.1.7"
